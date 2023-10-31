@@ -39,58 +39,92 @@ def hangmanGame(secret, hiddenWord, rawSecret):
     secret = list(secret)
     hiddenWord = list(hiddenWord)
     rawSecret = list(rawSecret)
-
+    
+    letras_corretas = 0
     erros = 0
-    letrasUsadas = []
+    letras_restantes = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    
+    # Variável que servirá para reproduzir mensagens de erro ou outras
+    message = ""
 
-    print(''.join(secret))
-
+    # Repete-se até chegar aos 7 erros
     while erros < 7:
+        
+        # Este comando serve só para limpar o que está acima para uma visibilidade mais fácil
+        print(10* "\n")
+        
         print(' '.join(hiddenWord))
+        print("Erros = ", erros, "/ 7")
+        print("Letras disponíveis: ", ', '.join(letras_restantes))
+
+        print(message)
+       
         # O jogador escolhe uma letra
         playerInput = input("Escolhe uma letra: ").upper()
         
         # Verificação de letras repetidas
-        if playerInput in letrasUsadas:
-            print("ERRO: Letra repetida.")
-        else:
-
+        if playerInput in letras_restantes:
+           
             # Verificação de input válido
             if str.isalpha(playerInput) == False:
-                print("ERRO: Só podes escrever letras.")
+                message = "ERRO: Inválido."
                 continue
         
             # Substituição (ou não no caso de errar) das letras.
             else:
+                # Valor que se permanecer a 0 contará um erro
                 acertou = 0
-
+                
+                # Comparação de cada letra em secret com a letra inputed pelo player
                 for index in range(len(secret)):
                     if playerInput == rawSecret[index]:
                         hiddenWord[index] = secret[index]
                         acertou = 1
+                        letras_corretas += 1
+
+                        message = "Acertaste!"
+                        
+                        # Substituição da letra correta por um "+"
+                        if playerInput in letras_restantes:
+                            letras_restantes[letras_restantes.index(playerInput)] = "+"
                 
+                # Caso o valor "acertou" seja 0, significa que o player não acertou nenhuma letra, logo o valor de "erros" subirá por 1.
                 if acertou == 0:
                     erros += 1
+                    letras_restantes[letras_restantes.index(playerInput)] = "-"
+                    message = "Letra errada! Tenta outra vez!"
+                
 
+            # Se o número de letras certas for do mesmo comprimento da palavra, o jogador vence
+            if letras_corretas == len(hiddenWord):
+                print("YOU WIN!")
+                break
         
+        # Caso o player apenas prima enter sem escrever nada
+        elif playerInput == "" or playerInput == " ":
+            message = "ERRO: Inválido."
         
-        
-        
-        
-        
-        
+        # Caso o player escolha uma letra já escolhida
+        else:
+            message = "ERRO: Letra repetida."
 
 
 
+    # GameOver se o player chegar aos 7 erros        
+    else:
+        print(10* "\n")
+        print("Erros = ", erros, "/ 7")
+        print("YOU LOSE! \nA palavra era:", ''.join(secret))
+        
 
-# Função função principal
+# Função principal
 def main():
     print("The Hangman!")
     from wordlist import words1, words2
     
     # Testagem dos diferentes tipos de palavras (O programa final usará apenas "words")
-    wordsNormal = words1              # palavras sem acentos nem cedilhas.
-    wordsSpecial = words2             # palavras com acentos ou cedilhas.
+    wordsNormal = words1             # palavras sem acentos nem cedilhas.
+    wordsSpecial = words2            # palavras com acentos ou cedilhas.
     words = words1 + words2          # palavras de ambos os tipos
    
     # Palavra secret (todos os caracteres tão em maiúscula)
@@ -103,7 +137,7 @@ def main():
     rawSecret = normaliseWord(secret)
     
     
-    # Programa principal 
+    # Programa com o jogo  
     hangmanGame(secret, hiddenWord, rawSecret)
 
 
