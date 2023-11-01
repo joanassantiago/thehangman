@@ -43,6 +43,7 @@ def hangmanGame(secret, hiddenWord, rawSecret):
     letras_corretas = 0
     erros = 0
     letras_restantes = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    letras_usadas = []
     
     # Variável que servirá para reproduzir mensagens de erro ou outras
     message = ""
@@ -87,29 +88,30 @@ def hangmanGame(secret, hiddenWord, rawSecret):
                         # Substituição da letra correta por um "+"
                         if playerInput in letras_restantes:
                             letras_restantes[letras_restantes.index(playerInput)] = "+"
+                            letras_usadas.append(playerInput)
                 
                 # Caso o valor "acertou" seja 0, significa que o player não acertou nenhuma letra, logo o valor de "erros" subirá por 1.
                 if acertou == 0:
                     erros += 1
                     letras_restantes[letras_restantes.index(playerInput)] = "-"
                     message = "Letra errada! Tenta outra vez!"
+                    letras_usadas.append(playerInput)
                 
 
             # Se o número de letras certas for do mesmo comprimento da palavra, o jogador vence
             if letras_corretas == len(hiddenWord):
-                print("YOU WIN!")
+                print("\nGANHASTES!")
+                print("Palavra: ", ''.join(secret))
                 break
-        
-        # Caso o player apenas prima enter sem escrever nada
-        elif playerInput == "" or playerInput == " ":
-            message = "ERRO: Inválido."
-        
+
         # Caso o player escolha uma letra já escolhida
-        else:
+        elif playerInput in letras_usadas:
             message = "ERRO: Letra repetida."
 
-
-
+        # Caso o player apenas prima enter sem escrever nada
+        else:
+           message = "ERRO: Inválido."
+        
     # GameOver se o player chegar aos 7 erros        
     else:
         print(10* "\n")
