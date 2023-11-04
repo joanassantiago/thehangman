@@ -61,10 +61,6 @@ def hangmanGame(secret, hiddenWord, rawSecret):
 
     # Repete-se até chegar aos 7 erros
     while erros < 7:
-        
-        # Este comando serve só para limpar o que está acima para uma visibilidade mais fácil
-        print(10* "\n")
-        
         print(hangDrawing(erros))
         
         print("\nPalavra:", ' '.join(hiddenWord))
@@ -76,7 +72,7 @@ def hangmanGame(secret, hiddenWord, rawSecret):
         print(message)
         
         # O jogador escolhe uma letra
-        playerInput = input("\nEscolhe uma letra (Se estiveres confiante, podes tentar adivinar a palavra): ").upper()
+        playerInput = input("\nEscolhe uma letra (Se estiveres confiante, podes tentar adivinhar a palavra): ").upper()
         
         # Se o jogador quiser adivinhar apenas uma letra
         if len(playerInput) == 1:   
@@ -117,7 +113,7 @@ def hangmanGame(secret, hiddenWord, rawSecret):
 
                 # Se o número de letras certas for do mesmo comprimento da palavra, o jogador vence
                 if letras_corretas == len(hiddenWord):
-                    print(3*"\n","GANHASTE!")
+                    print("\nGANHASTE!")
                     print("Palavra: ", ''.join(secret))
                     break
         
@@ -133,8 +129,7 @@ def hangmanGame(secret, hiddenWord, rawSecret):
         # Caso o player tente acertar a palavra toda de uma vez
         elif len(playerInput) == len(hiddenWord):
             if list(playerInput) == rawSecret: # Se as letras em playerInput forem as mesmas do que em rawSecret
-                print(3*"\n")
-                print("GANHASTE!")
+                print("\nGANHASTE!")
                 print("WOW, adivinhaste a palavra por completo!")
                 break
             # Será contado um erro se ele 
@@ -152,7 +147,7 @@ def hangmanGame(secret, hiddenWord, rawSecret):
     
     # GameOver se o player chegar aos 7 erros        
     else:
-        print(10* "\n")
+        print()
         print(hangDrawing(7))
         print("\nErros = ", erros, "/ 7")
         print("Letras disponíveis: ", ', '.join(letras_restantes))
