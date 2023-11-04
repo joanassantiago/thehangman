@@ -8,6 +8,18 @@ import random
 #So falta o boneco mas podemos faze-lo bonitao
 
 
+# Desenho do hangman a ser chamado pelo numero de erros
+def hangDrawing(erros):
+    if erros == 0: hangman = ("     _________  \n    |/        |\n    |           \n    |            \n    |           \n    |            \n    |          \n----+----------------")
+    if erros == 1: hangman = ("     _________  \n    |/        |\n    |         O \n    |            \n    |           \n    |            \n    |          \n----+----------------")
+    if erros == 2: hangman = ("     _________  \n    |/        |\n    |         O \n    |         |  \n    |         | \n    |            \n    |          \n----+----------------")
+    if erros == 3: hangman = ("     _________  \n    |/        |\n    |         O \n    |        /|  \n    |         | \n    |            \n    |          \n----+----------------")
+    if erros == 4: hangman = ("     _________  \n    |/        |\n    |         O \n    |        /|\ \n    |         | \n    |            \n    |          \n----+----------------")
+    if erros == 5: hangman = ("     _________  \n    |/        |\n    |         O \n    |        /|\ \n    |         | \n    |        /   \n    |          \n----+----------------")
+    if erros == 6: hangman = ("     _________  \n    |/        |\n    |         O \n    |        /|\ \n    |         | \n    |        / \ \n    |          \n----+----------------")
+    if erros == 7: hangman = ("     _________  \n    |/        |\n    |       (x_x) \n    |        /|\ \n    |         | \n    |        / \ \n    |          \n----+----------------")
+    return hangman
+
 # Função que transforma caracteres especiais em normais
 def normaliseWord (word):
     word = list(word)
@@ -53,10 +65,14 @@ def hangmanGame(secret, hiddenWord, rawSecret):
         # Este comando serve só para limpar o que está acima para uma visibilidade mais fácil
         print(10* "\n")
         
-        print(' '.join(hiddenWord))
-        print("Erros = ", erros, "/ 7")
+        print(hangDrawing(erros))
+        
+        print("\nPalavra:", ' '.join(hiddenWord))
+        
+        print("\nErros = ", erros, "/ 7")
+        
         print("Letras disponíveis: ", ', '.join(letras_restantes))
-
+ 
         print(message)
         
         # O jogador escolhe uma letra
@@ -137,7 +153,9 @@ def hangmanGame(secret, hiddenWord, rawSecret):
     # GameOver se o player chegar aos 7 erros        
     else:
         print(10* "\n")
-        print("Erros = ", erros, "/ 7")
+        print(hangDrawing(7))
+        print("\nErros = ", erros, "/ 7")
+        print("Letras disponíveis: ", ', '.join(letras_restantes))
         print("YOU LOSE! \nA palavra era:", ''.join(secret))
         
 
