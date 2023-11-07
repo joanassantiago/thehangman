@@ -1,4 +1,3 @@
 # thehangman
-Jogo da Forca
-- Projeto realizado para a cadeira de FP no curso de ECI da UA
-- Realizado por: Joana Santiago e Dinis Bernardo
+- Projeto realizado para a cadeira de Fundamentos da Programação no curso de ECI da UA
+- Realizado por: Joana Santiago (119705) e Dinis Bernardo(
